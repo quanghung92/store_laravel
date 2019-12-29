@@ -8,12 +8,12 @@ use Illuminate\Http\Request;
 class IndexController extends Controller
 {
     function getFornEndIndex() {
-        echo 'index';
+        return view('frontend.index');
     }
     function getFrontEndAbout() {
-        echo 'about';
+        return view('frontend.contact');
     }
     function getFrontEndContact() {
-        echo 'contact';
+        return view('frontend.about');
     }
 }

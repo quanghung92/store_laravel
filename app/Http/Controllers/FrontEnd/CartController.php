@@ -8,6 +8,6 @@ use Illuminate\Http\Request;
 class CartController extends Controller
 {
     function getCart() {
-        echo 'Cart';
+        return view('frontend.cart.cart');
     }
 }

@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 class categoryController extends Controller
 {
     function getCategory() {
-        echo 'category';
+       return view('backend.category.category');
     }
     function getEditCategory() {
-        echo 'Edit/category';
+        return view('backend.category.editcategory');
     }
 }

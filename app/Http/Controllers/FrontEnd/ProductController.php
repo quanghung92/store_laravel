@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     function getProntEndProduct() {
-        echo 'product';
+        return view('frontend.product.shop');
     }
     function getFrontEndDetail() {
-        echo 'detail';
+        return view('frontend.product.detail');
     }
 }

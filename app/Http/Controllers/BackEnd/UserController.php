@@ -8,12 +8,12 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     function getUser() {
-        echo 'User';
+        return view('backend.user.listuser');
     }
     function getUserAdd() {
-        echo 'Add User';
+        return view('backend.user.adduser');
     }
     function getUserEdit() {
-        echo 'Edit User';
+        return view('backend.user.edituser');
     }
 }
