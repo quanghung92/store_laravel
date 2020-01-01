@@ -27,6 +27,8 @@ Route::get('contact','frontend\IndexController@getFrontEndContact' );
 //checkout
 Route::group(['prefix' => 'checkout'], function () {
     Route::get('', 'frontend\CheckOutController@getCheckOut');
+
+    Route::post('', 'frontend\CheckOutController@postCheckOut');
     //conplete
     Route::get('complete', 'frontend\CheckOutController@getChekOutConplete');
 });
@@ -43,6 +45,8 @@ Route::group(['prefix' => 'product'], function () {
 //..............BackENd...............
 //login
 Route::get('login', 'backend\LoginController@getLogin');
+
+Route::post('login', 'backend\LoginController@postLogin');
     //admin
 Route::group(['prefix' => 'admin'], function () {
 Route::get('', 'backend\IndexController@getIndex');
@@ -52,6 +56,10 @@ Route::group(['prefix' => 'category'], function () {
     Route::get('','backend\categoryController@getCategory' );
     // edit category
     Route::get('edit','backend\categoryController@getEditCategory' );
+
+    Route::post('','backend\categoryController@postCategory' );
+    // edit category
+    Route::post('edit','backend\categoryController@postEditCategory' );
 });
 
 //order
@@ -70,6 +78,10 @@ Route::group(['prefix' => 'product'], function () {
     Route::get('add','backend\ProductController@getProductAdd');
     // Edit Product
     Route::get('edit', 'backend\ProductController@getProductEdit');
+
+    Route::post('add','backend\ProductController@postProductAdd');
+    // Edit Product
+    Route::post('edit', 'backend\ProductController@postProductEdit');
 });
 
 //User
@@ -80,6 +92,10 @@ Route::group(['prefix' => 'user'], function () {
     // Edit User
     Route::get('edit', 'backend\UserController@getUserEdit');
     });
+
+    Route::post('add','backend\UserController@postUserAdd' );
+    // Edit User
+    Route::post('edit', 'backend\UserController@postUserEdit');
 });
 
 

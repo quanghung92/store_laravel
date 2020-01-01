@@ -10,6 +10,12 @@ class CheckOutController extends Controller
     function getCheckOut() {
         return view('frontend.checkout.checkout');
     }
+
+    function postCheckOut(Request $r) {
+        dd($r->all());
+    }
+
+
     function getChekOutConplete() {
         return view('frontend.checkout.complete');
     }

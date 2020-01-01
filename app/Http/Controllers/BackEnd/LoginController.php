@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 class LoginController extends Controller
 {
     function getLogin() {
-        return view('backend.login');
+        return view('backend.login.login');
+    }
+    function postLogin(Request $r) {
+
     }
 }
