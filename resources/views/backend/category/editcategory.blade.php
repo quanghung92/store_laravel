@@ -45,6 +45,7 @@
                                     <label for="">Tên Danh mục</label>
                                     <input type="text" class="form-control" name="name" placeholder="Tên danh mục mới"
                                         value="Áo khoác nữ">
+                                        {{errorsShow($errors,'name')}}
                                     <div class="alert bg-danger" role="alert">
                                         <svg class="glyph stroked cancel">
                                             <use xlink:href="#stroked-cancel"></use>

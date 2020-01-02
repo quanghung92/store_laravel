@@ -4,7 +4,8 @@ namespace App\Http\Controllers\BackEnd;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Http\Requests\AddUserRequest;
+use App\Http\Requests\EditUserRequest;
 class UserController extends Controller
 {
     function getUser() {
@@ -17,10 +18,10 @@ class UserController extends Controller
         return view('backend.user.edituser');
     }
 
-    function postUserAdd(Request $r) {
+    function postUserAdd(AddUserRequest $r) {
 
     }
-    function postUserEdit(Request $r) {
+    function postUserEdit(EditUserRequest $r) {
 
     }
 

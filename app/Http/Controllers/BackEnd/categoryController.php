@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\BackEnd;
-
+use App\Http\Requests\AddCategoryRequest;
+use App\Http\Requests\EditCategoryRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -14,10 +15,10 @@ class categoryController extends Controller
         return view('backend.category.editcategory');
     }
 
-    function postCategory( Request $r){
+    function postCategory( AddCategoryRequest $r){
 
      }
-     function postEditCategory() {
+     function postEditCategory(EditCategoryRequest $r) {
 
      }
 }

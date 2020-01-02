@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\BackEnd;
 use App\Http\Requests\AddProductRequest;
+use App\Http\Requests\EditProductRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,7 @@ class ProductController extends Controller
     function postProductAdd(AddProductRequest $r) {
         dd($r->all());
     }
-    function postProductEdit(request $r) {
+    function postProductEdit(EditProductRequest $r) {
 
     }
 }

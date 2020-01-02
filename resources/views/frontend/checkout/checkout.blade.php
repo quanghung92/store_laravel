@@ -31,6 +31,7 @@
                             <div class="form-group">
                                 <label for="fname">Họ & Tên</label>
                                 <input name="name" type="text" id="fname" class="form-control" placeholder="First Name">
+                                {{errorsShow($errors,'name')}}
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -38,6 +39,7 @@
                                 <label for="fname">Địa chỉ</label>
                                 <input name="address" type="text" id="address" class="form-control"
                                     placeholder="Nhập địa chỉ của bạn">
+                                    {{errorsShow($errors,'address')}}
                             </div>
                         </div>
 
@@ -46,16 +48,18 @@
                                 <label for="email">Địa chỉ email</label>
                                 <input name="email" type="email" id="email" class="form-control"
                                     placeholder="Ex: youremail@domain.com">
+                                    {{errorsShow($errors,'email')}}
                             </div>
                             <div class="col-md-6">
                                 <label for="Phone">Số điện thoại</label>
                                 <input name="phone" type="text" id="zippostalcode" class="form-control"
                                     placeholder="Ex: 0123456789">
+                                    {{errorsShow($errors,'phone')}}
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-12">
-
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
                     </div>
@@ -81,6 +85,7 @@
                     <div class="col-md-12">
                         <p><a href="order-complete.html" class="btn btn-primary">Thanh toán</a></p>
                     </div>
+
                 </div>
             </div>
         </div>

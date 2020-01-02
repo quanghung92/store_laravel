@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\FrontEnd;
-
+use App\Http\Requests\CheckoutRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -11,7 +11,7 @@ class CheckOutController extends Controller
         return view('frontend.checkout.checkout');
     }
 
-    function postCheckOut(Request $r) {
+    function postCheckOut(CheckoutRequest $r) {
         dd($r->all());
     }
 

@@ -13,7 +13,7 @@ class CheckoutRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,23 @@ class CheckoutRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+        'name'=>'required|min:7',
+        'address'=>'required',
+	     'email'=>'required|email',
+        'phone'=>'required|min:7|max:11'
+        ];
+    }
+    public function messages()
+    {
+        return [
+        'name.required'=>'Không được để trống Họ Tên',
+        'name.min'=>'Họ Tên Không được nhỏ hơn 7 ký tự',
+        'address.required'=>'Địa chỉ không được bỏ trống',
+        'email.required'=>'Email không được để trống',
+        'email.email'=>'Email Không đúng định dạng',
+        'phone.required'=>'Không được để trống Số Điện thoại',
+        'phone.min'=>'Số Điện thoại không được nhỏ hơn 7 ký tự',
+        'phone.max'=>'Số Điện thoại không được lớn hơn 11 ký tự',
         ];
     }
 }

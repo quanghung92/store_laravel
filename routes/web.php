@@ -93,9 +93,9 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('edit', 'backend\UserController@getUserEdit');
     });
 
-    Route::post('add','backend\UserController@postUserAdd' );
+    Route::post('add','backend\UserController@postUserAdd');
     // Edit User
-    Route::post('edit', 'backend\UserController@postUserEdit');
+    Route::post('edit','backend\UserController@postUserEdit');
 });
 
 

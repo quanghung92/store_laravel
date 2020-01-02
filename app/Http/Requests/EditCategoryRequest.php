@@ -13,7 +13,7 @@ class EditCategoryRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,15 @@ class EditCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'=>'required|min:3'
         ];
     }
+    public function messages()
+    {
+        return [
+            'name.required'=>'tên danh mục không được để trống',
+            'name.min'=>'Tên danh mục phải ít nhất 3 ký tự'
+        ];
+    }
+
 }

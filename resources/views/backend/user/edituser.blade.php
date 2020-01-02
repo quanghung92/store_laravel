@@ -24,23 +24,28 @@
                                     <input type="text" name="email" class="form-control" value="admin@gmail.com">
                                     <div class="alert alert-danger" role="alert">
                                         <strong>email đã tồn tại!</strong>
+                                        {{errorsShow($errors,'email')}}
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>password</label>
                                     <input type="text" name="password" class="form-control" value="123456">
+                                    {{errorsShow($errors,'password')}}
                                 </div>
                                 <div class="form-group">
                                     <label>Full name</label>
                                     <input type="full" name="full" class="form-control" value="Nguyễn thế phúc">
+                                    {{errorsShow($errors,'full')}}
                                 </div>
                                 <div class="form-group">
                                     <label>Address</label>
                                     <input type="address" name="address" class="form-control" value="Thường tín">
+                                    {{errorsShow($errors,'address')}}
                                 </div>
                                 <div class="form-group">
                                     <label>Phone</label>
                                     <input type="phone" name="phone" class="form-control" value="0356653300">
+                                    {{errorsShow($errors,'phone')}}
                                 </div>
 
                                 <div class="form-group">
