@@ -91,11 +91,86 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('add','backend\UserController@getUserAdd' );
     // Edit User
     Route::get('edit', 'backend\UserController@getUserEdit');
+    Route::post('add', 'backend\UserController@postAddUser');
+    Route::post('edit','backend\UserController@postEditUser');
     });
 
-    Route::post('add','backend\UserController@postUserAdd');
-    // Edit User
-    Route::post('edit','backend\UserController@postUserEdit');
+
 });
+
+//-------------------------------Lý thuyết-----------------------
+
+// SCHEMA
+Route::group(['prefix' => 'schema'], function () {
+    //------ tạo bảo----------------
+    //- Dùng lệnh ROUTE group
+    // - dùng lệnh ROUTE Get
+    // - Dùng lệnh schema : crate-table
+    Route::get('create-table', function () {
+        Schema::create('users', function ($table) { // 'users' là tên bảng
+            $table->bigIncrements('id'); // tạo cột có tên id  kiểu dữ liệu bigint , tự tăng, là khóa chính, unsigned( không tính giá trị âm)
+            $table->string('name')->nullable(); // tạo trường dữ liệu dạng varchar, 255 ký tự , nullable là cho phép null (để thêm cột string ta dùng lện colstr)
+            $table->integer('phone')->unsigned()->nullable(); // dạng số int, không dấu và cho phpe1 null
+            $table->string('address', 100)->nullable(); // dạng dữ liệu varchar, 100 ký tự, cho phép null
+            $table->boolean('level')->nullable()->default(1);// dang boolen cho phép null và mặc định là 1
+            $table->timestamps(); // tự động tạo 2 trường thời gian created_at, updated_at
+        });
+
+        Schema::create('post', function ( $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('user_id')->unsigned(); // unsigned có ý nghỉa là phải
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); // references('id')->on('users') liên kết tới của bảng users
+        });
+    });
+    // bảng chứa khóa phụ
+
+
+    // xóa bảng
+Route::get('del-table', function () {
+    Schema::dropIfExists('users');
+});
+
+// Sửa tên bảng
+Route::get('rename-table', function () {
+Schema::rename('users', 'thanhvien');
+});
+
+// tương tác với cột
+// thêm cột
+Route::get('add-col', function () {
+    Schema::table('users', function ( $table) {
+    $table->integer('id-number')->unsigned()->nullable()->after('address');// after thêm cột sau cột address
+    });
+    });
+
+// sửa xóa cột
+// sử dụng thư viện docttrine/dbal :composer require doctrine/dbal
+Route::get('edit-col', function () {
+// Sửa tên cột
+Schema::table('users', function  ($table) {
+    $table->renameColumn('name', 'full');
+});
+// xóa cột
+Schema::table('users', function ( $table) {
+    $table->dropColumn('id-number');
+});
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+});
+
 
 

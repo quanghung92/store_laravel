@@ -13,7 +13,7 @@
             <div class="panel panel-primary">
                 <div class="panel-heading"><i class="fas fa-user"></i> Thêm thành viên</div>
                 <div class="panel-body">
-                    <form method="post">
+                    <form action="" method="post">
                         @csrf
                     <div class="row justify-content-center" style="margin-bottom:40px">
 

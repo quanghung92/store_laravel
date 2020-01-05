@@ -18,7 +18,7 @@ class UserController extends Controller
         return view('backend.user.edituser');
     }
 
-    function postUserAdd(AddUserRequest $r) {
+    function postAddUser(AddUserRequest $r) {
 
     }
     function postUserEdit(EditUserRequest $r) {
