@@ -101,76 +101,161 @@ Route::group(['prefix' => 'user'], function () {
 //-------------------------------Lý thuyết-----------------------
 
 // SCHEMA
-Route::group(['prefix' => 'schema'], function () {
-    //------ tạo bảo----------------
-    //- Dùng lệnh ROUTE group
-    // - dùng lệnh ROUTE Get
-    // - Dùng lệnh schema : crate-table
-    Route::get('create-table', function () {
-        Schema::create('users', function ($table) { // 'users' là tên bảng
-            $table->bigIncrements('id'); // tạo cột có tên id  kiểu dữ liệu bigint , tự tăng, là khóa chính, unsigned( không tính giá trị âm)
-            $table->string('name')->nullable(); // tạo trường dữ liệu dạng varchar, 255 ký tự , nullable là cho phép null (để thêm cột string ta dùng lện colstr)
-            $table->integer('phone')->unsigned()->nullable(); // dạng số int, không dấu và cho phpe1 null
-            $table->string('address', 100)->nullable(); // dạng dữ liệu varchar, 100 ký tự, cho phép null
-            $table->boolean('level')->nullable()->default(1);// dang boolen cho phép null và mặc định là 1
-            $table->timestamps(); // tự động tạo 2 trường thời gian created_at, updated_at
-        });
+// Route::group(['prefix' => 'schema'], function () {
+//     //------ tạo bảo----------------
+//     //- Dùng lệnh ROUTE group
+//     // - dùng lệnh ROUTE Get
+//     // - Dùng lệnh schema : crate-table
+//     Route::get('create-table', function () {
+//         Schema::create('users', function ($table) { // 'users' là tên bảng
+//             $table->bigIncrements('id'); // tạo cột có tên id  kiểu dữ liệu bigint , tự tăng, là khóa chính, unsigned( không tính giá trị âm)
+//             $table->string('name')->nullable(); // tạo trường dữ liệu dạng varchar, 255 ký tự , nullable là cho phép null (để thêm cột string ta dùng lện colstr)
+//             $table->integer('phone')->unsigned()->nullable(); // dạng số int, không dấu và cho phpe1 null
+//             $table->string('address', 100)->nullable(); // dạng dữ liệu varchar, 100 ký tự, cho phép null
+//             $table->boolean('level')->nullable()->default(1);// dang boolen cho phép null và mặc định là 1
+//             $table->timestamps(); // tự động tạo 2 trường thời gian created_at, updated_at
+//         });
 
-        Schema::create('post', function ( $table) {
-            $table->bigIncrements('id');
-            $table->bigInteger('user_id')->unsigned(); // unsigned có ý nghỉa là phải
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); // references('id')->on('users') liên kết tới của bảng users
-        });
+//         Schema::create('post', function ( $table) {
+//             $table->bigIncrements('id');
+//             $table->bigInteger('user_id')->unsigned(); // unsigned có ý nghỉa là phải
+//             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade'); // references('id')->on('users') liên kết tới của bảng users
+//         });
+//     });
+//     // bảng chứa khóa phụ
+
+
+//     // xóa bảng
+// Route::get('del-table', function () {
+//     Schema::dropIfExists('users');
+// });
+
+// // Sửa tên bảng
+// Route::get('rename-table', function () {
+// Schema::rename('users', 'thanhvien');
+// });
+
+// // tương tác với cột
+// // thêm cột
+// Route::get('add-col', function () {
+//     Schema::table('users', function ( $table) {
+//     $table->integer('id-number')->unsigned()->nullable()->after('address');// after thêm cột sau cột address
+//     });
+//     });
+
+// // sửa xóa cột
+// // sử dụng thư viện docttrine/dbal :composer require doctrine/dbal
+// Route::get('edit-col', function () {
+// // Sửa tên cột
+// Schema::table('users', function  ($table) {
+//     $table->renameColumn('name', 'full');
+// });
+// // xóa cột
+// Schema::table('users', function ( $table) {
+//     $table->dropColumn('id-number');
+// });
+// });
+// });
+
+
+//-------------------------Query Builder------------------------------
+// tương tác với dữ liệu trong database
+// Để tương tác với database ta dùng DB::
+
+Route::group(['prefix' => 'query'], function () {
+    //---------Thêm bản ghi mới-------------------
+    Route::get('insert', function () {
+        // thêm 1 bản ghi
+        DB::table('users')->insert([
+            'email'=>'A@gmail.com',
+            'password'=>'123',
+            'full'=>'Nguyễn Văn A',
+            'phone'=>'0906048552',
+            'address'=>'Hà Nội',
+            'level'=>'1'
+        ]);
+        /// Thêm nhiều bản ghi
+        DB::table('users')->insert([
+            //Bản 1
+            ['email'=>'B@gmail.com','password'=>'123','full'=>'Nguyễn Văn B','phone'=>'0906044452','address'=>'Hà Nội','level'=>'1'],
+            //Bản 2
+            ['email'=>'C@gmail.com','password'=>'123','full'=>'Nguyễn Văn C','phone'=>'0906048449','address'=>'Vĩnh Phúc','level'=>'1'],
+            //bản 3
+            ['email'=>'D@gmail.com','password'=>'123','full'=>'Nguyễn Văn D','phone'=>'0906048589','address'=>'Bình Dương','level'=>'1']
+        ]);
     });
-    // bảng chứa khóa phụ
+    //------------Sửa bản ghi--------------------
+    Route::get('update', function () {
+        // Tìm bản ghi theo diều kiện
+        // DB::table('users')->where('address','Hà Nội')->update([
+        //     'password'=>'123456',
+        // ]);
+        // //Tìm bản ghi theo nhiều điều kiện thì dùng WHERE
+        // DB::table('users')->where('address','Hà Nội')->where('level','1')->update([
+        //     'password'=>'123456',
+        //     'address'=>'Bắc Ninh'
+        // ]);
+        // Sửa hoặc thêm bản ghi mới: updateOrInsert([Điều Kiện],[Thay Đổi])
+        // Nếu tồn tại bản ghi đúng với điều kiện thì thực hiện update còn không có thì insert bản ghi mới
 
-
-    // xóa bảng
-Route::get('del-table', function () {
-    Schema::dropIfExists('users');
-});
-
-// Sửa tên bảng
-Route::get('rename-table', function () {
-Schema::rename('users', 'thanhvien');
-});
-
-// tương tác với cột
-// thêm cột
-Route::get('add-col', function () {
-    Schema::table('users', function ( $table) {
-    $table->integer('id-number')->unsigned()->nullable()->after('address');// after thêm cột sau cột address
+        DB::table('users')->updateOrInsert(['address'=>'Hà Nội'],['phone'=>'9874563215','address'=>'Bắc Giang']);
     });
+    //------------ Xóa bản ghi-------------------
+    Route::get('del', function () {
+        // Xóa 1 bản ghi
+        // DB::table('users')->where('id','6')->delete();
+        // Xóa tất cả bản ghi
+        DB::table('users')->delete();
     });
 
-// sửa xóa cột
-// sử dụng thư viện docttrine/dbal :composer require doctrine/dbal
-Route::get('edit-col', function () {
-// Sửa tên cột
-Schema::table('users', function  ($table) {
-    $table->renameColumn('name', 'full');
+
+    // Nâng cao
+
+    // Lấy dữ liệu trong database
+    //Sử dụng các phương thức: get(): lấy tất cả các dữ liệu,first(): lấy dữ liệu đầu,find(): tìm dữ liệu
+
+    Route::get('get', function () {
+        // lấy tất cả dữ liệu theo điều kiện trả về dạng mảng
+        // $user= DB::table('users')->where('level',0)->get();
+        // dd($user->all());
+
+        // lấy bản ghi dầu tiên theo điều kiện
+        // $user= DB::table('users')->where('level',0)->first();
+        // dd($user);
+        // lấy 1 bản ghi theo id mặc định tìm theo ID
+    $user=DB::table('users')->find(27);
+    dd($user);
+
+    });
+
+    // Điều kiện where
+    Route::get('where', function () {
+        // WHERE: gồm 3 tham số  trường cần tìm, toán tử so sánh, giá trị cần tìm
+        //  $user= DB::table('users')->where('level','<>',0)->get();
+        //  dd($user)->all();
+         // where and : điều kiện và
+        //  $user= DB::table('users')->where('level','<>',0)->where('full','vietpro')->get();
+        //  dd($user)->all();
+
+         //where or
+        //  $user= DB::table('users')->where('id','<',28)->orwhere('id','>',29)->get();
+        //  dd($user);
+         // whereBetween
+        //  $user =DB::table('users')->whereBetween('id',[27,29])->get();
+        //  dd($user);
+         // lấy 1 số lượng bản ghi nhất định
+
+    });
+    Route::get('take', function () {
+        // $user=DB::table('users')->take(3)->get();
+        // dd($user);
+        //orderBy()
+        // $user=DB::table('users')->orderBy('id','desc')->take(3)->get();
+        // dd($user);
+        //Skip
+        $user=DB::table('users')->skip(1)->take(2)->get();
+        dd($user);
+     });
 });
-// xóa cột
-Schema::table('users', function ( $table) {
-    $table->dropColumn('id-number');
-});
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-});
-
 
 
