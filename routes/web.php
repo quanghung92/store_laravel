@@ -90,9 +90,10 @@ Route::group(['prefix' => 'user'], function () {
     //Add User
     Route::get('add','backend\UserController@getUserAdd' );
     // Edit User
-    Route::get('edit', 'backend\UserController@getUserEdit');
+    Route::get('edit/{idUser}', 'backend\UserController@getUserEdit');
     Route::post('add', 'backend\UserController@postAddUser');
-    Route::post('edit','backend\UserController@postEditUser');
+    Route::post('edit/{idUser}','backend\UserController@postUserEdit');
+    Route::get('del/{idUser}', 'backend\UserController@delUser');
     });
 
 
@@ -257,5 +258,23 @@ Route::group(['prefix' => 'query'], function () {
         dd($user);
      });
 });
+///--------------Đệ Quy ( hàm gọi lại chính nó) test trên php test--------------------///
+// $array=[
+//     ['id'=>1,'name'=>'Nam','slug'=>'nam','parent'=>0],
+//     ['id'=>2,'name'=>'Áo Nam','slug'=>'ao-nam','parent'=>1],
+//     ['id'=>3,'name'=>'Quần Nam','slug'=>'quan-nam','parent'=>1],
+//     ['id'=>5,'name'=>'Nữ','slug'=>'nu','parent'=>0],
+//     ['id'=>6,'name'=>'Áo Nữ','slug'=>'ao-nu','parent'=>5],
+//     ['id'=>7,'name'=>'Quần Nữ','slug'=>'quan-nu','parent'=>5]
 
+// ];
+// function Showcate($arr,$parent,$tab){
+//     foreach($arr as $row){
+//         if($row['parent']==$parent){
+//             echo '<option>'.$tab.$row['name'].'</option>';
+//             Showcate($arr,$row['id'],$tab.'--|');
 
+//         }
+//     }
+//     }
+//     showcate($arr,0,"");

@@ -5,5 +5,14 @@ function errorsShow($errors, $name){
        echo '<strong>'.$errors->first($name).'</strong>';
        echo '</div>';
     }
+}
+// đệ quy
+function Showcate($arr,$parent,$tab){
+foreach($arr as $row){
+    if($row['parent']==$parent){
+        echo '<option>'.$tab.$row['name'].'</option>';
+        Showcate($arr,$row['id'],$tab.'--|');
 
+    }
+}
 }

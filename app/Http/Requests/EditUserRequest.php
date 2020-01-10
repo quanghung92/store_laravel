@@ -28,7 +28,7 @@ class EditUserRequest extends FormRequest
             'full'=>'required|min:5',
             'phone'=>'required',
             'address'=>'required|min:8',
-            'password'=>'required|min:6',
+
         ];
     }
     public function messages()
@@ -41,8 +41,7 @@ class EditUserRequest extends FormRequest
             'phone.required'=>'số điện thoại không được để trống',
             'address.required'=>'địa chỉ không được để trống',
             'address.min'=>'Địa chỉ không được nhỏ hơn 8 ký tự',
-            'password.required'=>'Password không được để trống',
-            'password.min'=>'Password không được nhỏ hơn 6 ký tự',
+
         ];
     }
 

@@ -50,7 +50,7 @@
                                 <label>Level</label>
                                 <select name="level" class="form-control">
                                     <option value="1">admin</option>
-                                    <option selected value="2">user</option>
+                                    <option selected value="0">user</option>
                                 </select>
                             </div>
                         </div>
