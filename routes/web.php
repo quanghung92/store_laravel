@@ -55,11 +55,12 @@ Route::get('', 'backend\IndexController@getIndex');
 Route::group(['prefix' => 'category'], function () {
     Route::get('','backend\categoryController@getCategory' );
     // edit category
-    Route::get('edit','backend\categoryController@getEditCategory' );
+    Route::get('edit/{idCate}','backend\categoryController@getEditCategory' );
 
     Route::post('','backend\categoryController@postCategory' );
     // edit category
-    Route::post('edit','backend\categoryController@postEditCategory' );
+    Route::post('edit/{idCate}','backend\categoryController@postEditCategory' );
+    Route::get('del/{idCate}','backend\categoryController@delCategory' );
 });
 
 //order
@@ -278,3 +279,35 @@ Route::group(['prefix' => 'query'], function () {
 //     }
 //     }
 //     showcate($arr,0,"");
+
+//-----------------------Relationship(Quan hệ giữa các bảng)------------------------------
+//-- Bảng chính là bảng chứa khóa chính, bảng phụ là bảng chứa khóa ngoại
+//-- Liên kết bắt đầu từ bảng nào thì viết trong model của bảng đó
+//-- Liên kết từ bảng chính -> phụ là liên kết xuôi ngược lại là liên kết ngược.
+//-- Liên lết 1-1 Xuôi: return $this->hasOne(model liên kết đến, khóa phụ, Khóa chính);
+Route::get('lk-1-1-x', function () {
+    $user = App\User::find(1);
+    $info = $user->info()->first();
+
+});
+
+// liên kết phụ : return $this->belongsTo('model liên kết tới', 'Khóa ngoại', 'khóa bảng phụ');
+Route::get('lk-1-1-n', function () {
+    $info = App\models\info::find(2);
+    $user = $info->User()->first();
+});
+
+// Liên kết 1 nhiều sử dụng: return $this->hasMany('Model liên kết', 'Khóa ngoại', 'Khóa chính');
+Route::get('lk-1-n', function () {
+        $cate = App\modes\category::find(2);
+        $prd = $cate->product()->get();
+        dd($prd->toarray());
+});
+// CHiều ngược chính là liên kết 1-1 ngược
+Route::get('lk-1-1', function () {
+    $prd = App\models\product::find(6);
+    $cate= $prd->category()->first(); // category là tên funtion trong model product
+    dd($cate->toarray());
+});
+// Liên kết nhiều nhiều Từ bảng 1 -> bảng 2
+//--return $this->belongsToMany('Model liên kết tới', 'bảng chung gian (bảng pivot)', 'Khóa ngoại 1', 'Khóa ngoại 2');
