@@ -25,7 +25,7 @@ class EditProductRequest extends FormRequest
     {
         return [
             'code'=>'required|min:3',
-            'name'=>'required|min:3',
+            'name'=>'required|min:3|unique:product,name,'.$this->prd_id,
             'price'=>'required|numeric',
             'img'=>'image', // file phải là định dạng ảnh
         ];
@@ -40,6 +40,7 @@ class EditProductRequest extends FormRequest
             'price.required'=>'Giá sản phẩm không được để trống!',
             'price.numeric'=>'Giá sản phẩm không đúng định dạng!',
             'img.image'=>'File Ảnh không đúng định dạng!',
+            'name.unique'=>'Tên sản phẩm đã tồn tại'
         ];
     }
 }

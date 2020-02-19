@@ -4,7 +4,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Login</title>
+    <title>Login</title>
+    <base href="/backend/">
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 
 	<link href="css/styles.css" rel="stylesheet">
@@ -21,7 +22,7 @@
                         @csrf
 						<fieldset>
 							<div class="form-group">
-                                <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus="">
+                            <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus="" value="{{old('email')}}">
                                 {{errorsShow($errors,'email')}}
 							</div>
 							<div class="form-group">
@@ -33,7 +34,7 @@
 									<input name="remember" type="checkbox" value="Remember Me">Remember Me
 								</label>
 							</div>
-                            <a href="index.html" class="btn btn-primary">Login</a>
+                            <button type="submit" class="btn btn-primary">Đăng Nhập</button>
 
 						</fieldset>
 					</form>

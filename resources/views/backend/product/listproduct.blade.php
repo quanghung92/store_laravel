@@ -1,5 +1,8 @@
 @extends('backend.master.master')
 @section('title','List Product')
+@section('product')
+class="active"
+@endsection
 @section('main')
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
     <div class="row">
@@ -27,12 +30,15 @@
                 <div class="panel-body">
                     <div class="bootstrap-table">
                         <div class="table-responsive">
+                            @if (session('thongbao'))
                             <div class="alert bg-success" role="alert">
                                 <svg class="glyph stroked checkmark">
                                     <use xlink:href="#stroked-checkmark"></use>
-                                </svg>Đã thêm thành công<a href="#" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+                                </svg>{{ session('thongbao') }}<a href="/admin/product" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
                             </div>
-                            <a href="addproduct.html" class="btn btn-primary">Thêm sản phẩm</a>
+                            @endif
+
+                            <a href="../admin/product/add" class="btn btn-primary">Thêm sản phẩm</a>
                             <table class="table table-bordered" style="margin-top:20px;">
 
                                 <thead>
@@ -47,63 +53,46 @@
                                 </thead>
                                 <tbody>
 
+                                    @foreach ($products  as $row)
                                     <tr>
-                                        <td>1</td>
+                                    <td>{{$row->id}}</td>
                                         <td>
                                             <div class="row">
-                                                <div class="col-md-3"><img src="img/ao-khoac.jpg" alt="Áo đẹp" width="100px" class="thumbnail"></div>
+                                                <div class="col-md-3"><img src="img/{{ $row->img }}" alt="Áo đẹp" width="100px" class="thumbnail"></div>
                                                 <div class="col-md-9">
-                                                    <p><strong>Mã sản phẩm : SP01</strong></p>
-                                                    <p>Tên sản phẩm :Áo Khoác Bomber Nỉ Xanh Lá Cây AK179</p>
+                                                <p><strong>Mã sản phẩm : {{$row->code}}</strong></p>
+                                                <p>Tên sản phẩm :{{$row->name}}</p>
 
 
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>500.000 VND</td>
+                                    <td>{{number_format($row->price,0,'','.')}}</td>
                                         <td>
+
+                                            @if ($row->state==1)
                                             <a class="btn btn-success" href="#" role="button">Còn hàng</a>
+                                            @else
+                                            <a class="btn btn-danger" href="#" role="button">Hết hàng</a>
+                                            @endif
+
                                         </td>
-                                        <td>Áo Khoác Nam</td>
+                                         {{-- show danh mục sản phẩm theo relationship --}}
+                                    <td>{{ $row->category->name }}</td>
                                         <td>
-                                            <a href="#" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</a>
-                                            <a href="#" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Xóa</a>
+                                        <a href="../admin/product/edit/{{$row->id}}" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</a>
+                                            <a onclick="return del({{$row->name}})" href="../admin/product/del/{{$row->id}}" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Xóa</a>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>
-                                            <div class="row">
-                                                <div class="col-md-3"><img src="img/ao-khoac.jpg" alt="Áo đẹp" width="100px" class="thumbnail"></div>
-                                                <div class="col-md-9">
-                                                    <p><strong>Mã sản phẩm : SP01</strong></p>
-                                                    <p>Tên sản phẩm :Áo Khoác Bomber Nỉ Xanh Lá Cây AK179</p>
+                                    @endforeach
 
-
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td>500.000 VND</td>
-                                        <td>
-                                            <a class="btn btn-danger" href="#" role="button">hết hàng</a>
-                                        </td>
-                                        <td>Áo Khoác Nam</td>
-                                        <td >
-                                            <a href="#" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Sửa</a>
-                                            <a href="#" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i> Xóa</a>
-                                        </td>
-                                    </tr>
 
 
                                 </tbody>
                             </table>
                             <div align='right'>
                                 <ul class="pagination">
-                                    <li class="page-item"><a class="page-link" href="#">Trở lại</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">tiếp theo</a></li>
+                                   {{ $products ?? ''->links() }}
                                 </ul>
                             </div>
                         </div>
@@ -116,4 +105,14 @@
 
 
         </div>
+@endsection
+
+@section('script')
+    @parent
+    <script>
+        function del(name){
+            return confirm ('bạn muốn xóa sản phẩm '+name+' ?');
+        }
+
+    </script>
 @endsection

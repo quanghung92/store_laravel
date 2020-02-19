@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class productOrd extends Model
 {
-    protected $table ='order';
-    public function productOrd()
+    protected $table ='product_order';
+    public $timestamps=false;
+    public function order()
     {
-        return $this->belongsTo('App\models\Order', 'order_id', 'id');
+        return $this->belongsTo('App\models\order', 'order_id', 'id');
     }
 }

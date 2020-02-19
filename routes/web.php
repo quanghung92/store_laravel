@@ -44,12 +44,14 @@ Route::group(['prefix' => 'product'], function () {
 
 //..............BackENd...............
 //login
-Route::get('login', 'backend\LoginController@getLogin');
+Route::get('login', 'backend\LoginController@getLogin')->middleware('CheckLogout');
 
+Route::get('logout', 'backend\LoginController@getlogout');
 Route::post('login', 'backend\LoginController@postLogin');
     //admin
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin','middleware'=>'CheckLogin'], function () {
 Route::get('', 'backend\IndexController@getIndex');
+Route::get('logout', 'backend\IndexController@logout');
 
 //category
 Route::group(['prefix' => 'category'], function () {
@@ -66,8 +68,10 @@ Route::group(['prefix' => 'category'], function () {
 //order
 Route::group(['prefix' => 'order'], function () {
     Route::get('', 'backend\OrderController@GetOrder');
-    // Detail Order
-    Route::get('detail', 'backend\OrderController@getDetailOrder');
+    // Detail Order-
+    Route::get('detail/{order_id}', 'backend\OrderController@getDetailOrder');
+    // paid Order- Sử lý đơn hàng
+    Route::get('paid/{order_id}', 'backend\OrderController@getPaidOrder');
     //Oder process
     Route::get('process', 'backend\OrderController@getProcess');
 });
@@ -78,11 +82,12 @@ Route::group(['prefix' => 'product'], function () {
     //add product
     Route::get('add','backend\ProductController@getProductAdd');
     // Edit Product
-    Route::get('edit', 'backend\ProductController@getProductEdit');
+    Route::get('edit/{prd_id}', 'backend\ProductController@getProductEdit');
+    Route::get('del/{prd_id}', 'backend\ProductController@getProductDel');
 
     Route::post('add','backend\ProductController@postProductAdd');
     // Edit Product
-    Route::post('edit', 'backend\ProductController@postProductEdit');
+    Route::post('edit/{prd_id}', 'backend\ProductController@postProductEdit');
 });
 
 //User
